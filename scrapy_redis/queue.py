@@ -12,7 +12,7 @@ class RedisQueue(object):
         return cls(settings)
 
     def get(self):
-        self.redis.lpop(self.queue_key)
+        return self.redis.lpop(self.queue_key)
 
     def put(self, seed):
         return self.redis.rpush(self.queue_key, seed)

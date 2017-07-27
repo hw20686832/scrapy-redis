@@ -49,7 +49,7 @@ class Scheduler(object):
 
     def open(self, spider):
         self.spider = spider
-        return self.df.open()
+        return self.df.open(spider)
 
     def close(self, reason):
         self.queue.flush()
@@ -78,7 +78,7 @@ class Scheduler(object):
         self.queue.put(req)
 
     def _dqpop(self):
-        if self.task_model:
+        if self.queue:
             d = self.queue.get()
             if d:
                 return request_from_dict(
