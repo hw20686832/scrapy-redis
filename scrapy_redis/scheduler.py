@@ -70,7 +70,7 @@ class Scheduler(object):
         return request
 
     def __len__(self):
-        return self.task_model.q_len() + self.flow_model.q_len()
+        return len(self.queue)
 
     def _eqpush(self, request):
         req_dict = request_to_dict(request, self.spider)
