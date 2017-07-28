@@ -5,7 +5,7 @@ import pickle
 from scrapy.utils.reqser import request_to_dict, request_from_dict
 from scrapy.utils.misc import load_object
 
-from .queue import RedisQueue
+from .queue import PriorityQueue
 
 
 class ScrapyRequestEncoder(json.JSONEncoder):
@@ -41,7 +41,7 @@ class Scheduler(object):
         settings = crawler.settings
         dupefilter_cls = load_object(settings['DUPEFILTER_CLASS'])
         dupefilter = dupefilter_cls.from_settings(settings)
-        queue = RedisQueue.from_settings(settings)
+        queue = PriorityQueue.from_settings(settings)
         return cls(dupefilter, queue, crawler.stats, settings)
 
     def has_pending_requests(self):
@@ -75,7 +75,7 @@ class Scheduler(object):
     def _eqpush(self, request):
         req_dict = request_to_dict(request, self.spider)
         req = json.dumps(req_dict, cls=ScrapyRequestEncoder)
-        self.queue.put(req)
+        self.queue.put(req, request.priority)
 
     def _dqpop(self):
         if self.queue:
