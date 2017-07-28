@@ -2,6 +2,14 @@
 Redis based queue for Scrapy 
 
 ### INSTALL
+1. Install pyreBloom
+```shell
+sudo apt-get install hiredis-dev
+git clone https://github.com/seomoz/pyreBloom.git
+cd pyreBloom
+sudo python setup.py install
+```
+2. Install scrapy-redis
 ```shell
 git clone https://github.com/hw20686832/scrapy-redis.git
 cd scrapy-redis
