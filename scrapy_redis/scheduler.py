@@ -12,6 +12,7 @@ class ScrapyRequestEncoder(json.JSONEncoder):
     def default(self, obj):
         try:
             data = {}
+            data['id'] = id(obj)
             data['obj'] = pickle.dumps(obj)
             data['__type__'] = "__scrapy_obj__"
         except:
